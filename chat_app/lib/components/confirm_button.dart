@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class ConfirmButton extends StatelessWidget {
 
   String labelText;
-  ConfirmButton({super.key, required this.labelText});
+  Function? onPressed;
+  ConfirmButton({super.key, required this.labelText, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class ConfirmButton extends StatelessWidget {
       height: 40,
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: ()=> onPressed!(),
         child: Text(labelText),
       ),
     );

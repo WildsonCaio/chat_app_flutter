@@ -1,11 +1,16 @@
 import 'package:chat_app/components/auth_button.dart';
 import 'package:chat_app/components/confirm_button.dart';
 import 'package:chat_app/components/custom_input.dart';
+import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app/views/home_page.dart';
 import 'package:chat_app/views/register_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +26,38 @@ class LoginPage extends StatelessWidget {
               color: Colors.green,
             ),
             CustomInput(
+              controller: emailController,
               labelText: 'Email',
             ),
             CustomInput(
+              controller: passwordController,
               labelText: 'Password',
               isObscure: true,
             ),
-            ConfirmButton(labelText: 'Entrar'),
+            ConfirmButton(
+              labelText: 'Entrar',
+              onPressed: () async {
+                try {
+                  var user = await FirebaseAuthService()
+                      .login(emailController.text, passwordController.text);
+                      print(user);
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text(
+                        e.toString(),
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

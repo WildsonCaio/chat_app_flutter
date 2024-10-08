@@ -40,7 +40,6 @@ class LoginPage extends StatelessWidget {
                 try {
                   var user = await FirebaseAuthService()
                       .login(emailController.text, passwordController.text);
-                      print(user);
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => HomePage(),

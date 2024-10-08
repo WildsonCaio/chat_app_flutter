@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthService {
+
+
   FirebaseAuth auth = FirebaseAuth.instance;
 
   login(email, password) async {
@@ -39,4 +41,22 @@ class FirebaseAuthService {
       throw e.message.toString();
     }
   }
+
+
+
+  checkUser() async {
+
+    var user = await auth.currentUser;
+    return user!.displayName;
+
+  }
+
+
 }
+
+
+
+
+
+
+
